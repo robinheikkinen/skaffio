@@ -1,10 +1,18 @@
 # Skaffio
 
-> Hette tidigare **Fridgely** — legacy-namnet lever kvar i sökvägar, containernamn och domän (se CLAUDE.md).
+> Hette tidigare **Fridgely** — det gamla namnet lever kvar på ett par ställen internt (containernamn, domän), men appen heter Skaffio.
 
 Self-hosted **smart-kitchen PWA** för familjen — recept, måltidsplanering, skafferi, AI-assistens.
 
 Byggd för Unraid + Docker Compose, men funkar var som helst med Docker.
+
+---
+
+## Skärmdumpar
+
+| Recept | Receptdetalj | Pantry |
+|---|---|---|
+| ![Recept](docs/screenshots/home.png) | ![Receptdetalj](docs/screenshots/recipe-detail.png) | ![Pantry](docs/screenshots/pantry.png) |
 
 ---
 
@@ -105,7 +113,7 @@ Alla i `.env` (kopiera från `.env.example`):
 
 ## Data & Backup
 
-All persistent data ligger i bind-mounten `/mnt/user/appdata/fridgely/data/`:
+All persistent data ligger i volymen som mountas in i `api`-containern (se `docker-compose.yml`):
 
 ```
 data/
@@ -114,14 +122,14 @@ data/
 └── backups/            # Automatiska SQLite-snapshots (24h)
 ```
 
-**Säkerhetskopiera:** vilken backup-lösning som helst som tar `/mnt/user/appdata/fridgely/data/` räcker. Rekommenderat: Unraid Appdata.Backup + rclone-crypt till Google Drive.
+**Säkerhetskopiera:** vilken backup-lösning som helst som tar den mountade data-volymen räcker (t.ex. rclone-crypt till valfri molnlagring).
 
 ---
 
 ## Uppdatering
 
 ```bash
-cd /mnt/user/Mainshare/DevOps/Claude/receptapp   # eller var du har repot
+cd skaffio   # eller var du har repot
 git pull
 docker compose up -d --build
 ```
@@ -144,7 +152,7 @@ PWA på telefonen uppdateras automatiskt vid nästa öppning (skipWaiting + clie
 ## Struktur
 
 ```
-fridgely/
+skaffio/
 ├── backend/                 # FastAPI + SQLite
 │   ├── routes/              # API-endpoints
 │   ├── services/            # AI, backup, auth, audit, HA-integration
