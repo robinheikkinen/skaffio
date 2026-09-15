@@ -1,0 +1,19 @@
+<svg width="320" height="400" viewBox="0 0 100 125" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  <path d="M50,4 L86,4 Q93,4 93,11 L93,115 Q93,122 86,122 L50,122 Z" fill="#1a1d27"></path>
+  <path d="M14,4 L50,4 L50,122 L14,122 Q7,122 7,115 L7,11 Q7,4 14,4 Z" fill="#13151d"></path>
+  <path d="M50,4 L16,10 L16,116 L50,122 Z" fill="#E07A4A"></path>
+  <line x1="16" y1="34" x2="50" y2="32" stroke="rgba(0,0,0,.18)" stroke-width="2.5"></line>
+  <rect x="34" y="28" width="5.5" height="34" rx="2.75" fill="rgba(0,0,0,.2)"></rect>
+  <line x1="52" y1="55" x2="91" y2="55" stroke="rgba(255,255,255,.08)" stroke-width="1.8"></line>
+  <line x1="52" y1="78" x2="91" y2="78" stroke="rgba(255,255,255,.08)" stroke-width="1.8"></line>
+  <rect x="58" y="32" width="5" height="15" rx="2.5" fill="rgba(255,255,255,.4)"></rect>
+  <rect x="69" y="32" width="5" height="15" rx="2.5" fill="rgba(255,255,255,.4)"></rect>
+  <rect x="63.5" y="45" width="5" height="12" rx="2.5" fill="rgba(255,255,255,.4)"></rect>
+  <rect x="63" y="55" width="7" height="18" rx="3.5" fill="rgba(255,255,255,.4)"></rect>
+  <circle cx="58" cy="67" r="5.5" fill="#7ACC5A" opacity=".9"></circle>
+  <circle cx="71" cy="66" r="5.5" fill="#E07A4A" opacity=".9"></circle>
+  <circle cx="82" cy="67" r="4.5" fill="#E0C84A" opacity=".9"></circle>
+  <circle cx="59" cy="87" r="4" fill="#D44038" opacity=".8"></circle>
+  <circle cx="73" cy="87" r="4.5" fill="#C4820A" opacity=".8"></circle>
+</svg>

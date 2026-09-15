@@ -1,0 +1,81 @@
+services:
+  api:
+    build: ./backend
+    container_name: fridgely-api
+    restart: unless-stopped
+    volumes:
+      # Bind-mount mot Unraid appdata — Unraids CA Backup tar med detta automatiskt
+      # och du kommer åt db.sqlite + uploads/ direkt via SMB \\unraid\appdata\fridgely\data
+      - /mnt/user/appdata/fridgely/data:/data
+    environment:
+      - DATABASE_URL=sqlite:////data/db.sqlite
+      - JWT_SECRET=${JWT_SECRET:-}
+      - ALLOW_REGISTRATION=${ALLOW_REGISTRATION:-false}
+      - HASS_URL=${HASS_URL:-}
+      - HASS_TOKEN=${HASS_TOKEN:-}
+      - HASS_FREEZER_WEBHOOK=${HASS_FREEZER_WEBHOOK:-}
+      # Legacy single-provider (mappas till "staik"-providern i ai.py)
+      - AI_API_URL=${AI_API_URL:-https://api.openai.com/v1}
+      - AI_API_KEY=${AI_API_KEY:-}
+      - AI_MODEL=${AI_MODEL:-gpt-4o-mini}
+      - AI_VISION_MODEL=${AI_VISION_MODEL:-gpt-4o-mini}
+      # Multi-provider: lägg nyckel i .env → providern går med i failover-kedjan
+      - GEMINI_API_URL=${GEMINI_API_URL:-https://generativelanguage.googleapis.com/v1beta/openai}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.0-flash}
+      - GEMINI_VISION_MODEL=${GEMINI_VISION_MODEL:-gemini-2.0-flash}
+      - GITHUB_MODELS_API_URL=${GITHUB_MODELS_API_URL:-https://models.inference.ai.azure.com}
+      - GITHUB_MODELS_API_KEY=${GITHUB_MODELS_API_KEY:-}
+      - GITHUB_MODELS_MODEL=${GITHUB_MODELS_MODEL:-gpt-4o}
+      - GITHUB_MODELS_VISION_MODEL=${GITHUB_MODELS_VISION_MODEL:-gpt-4o}
+      - STAIK_API_URL=${STAIK_API_URL:-}
+      - STAIK_API_KEY=${STAIK_API_KEY:-}
+      - STAIK_MODEL=${STAIK_MODEL:-}
+      - STAIK_VISION_MODEL=${STAIK_VISION_MODEL:-}
+      # Privacy: kvitton skickas ALDRIG till cloud-AI (bara lokala Staik). false = tillåt fallback.
+      - RECEIPT_LOCAL_ONLY=${RECEIPT_LOCAL_ONLY:-true}
+      - ANTHROPIC_API_URL=${ANTHROPIC_API_URL:-https://api.anthropic.com/v1}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - ANTHROPIC_MODEL=${ANTHROPIC_MODEL:-claude-sonnet-4-6}
+      - SCHOOL_MENU_URL=${SCHOOL_MENU_URL:-}
+      - SCHOOL_DISPLAY_NAME=${SCHOOL_DISPLAY_NAME:-}
+      - HASS_PRESCHOOL_CALENDAR=${HASS_PRESCHOOL_CALENDAR:-}
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL:-}
+      - FIRECRAWL_URL=${FIRECRAWL_URL:-}
+      - CF_TRUST_HEADERS=${CF_TRUST_HEADERS:-true}
+      - CF_ACCESS_TEAM=${CF_ACCESS_TEAM:-}
+      - CF_ACCESS_AUD=${CF_ACCESS_AUD:-}
+      # Sätt COOKIE_SECURE=true om appen nås via HTTPS (CF Tunnel-produktion)
+      - COOKIE_SECURE=${COOKIE_SECURE:-false}
+      # CORS: komma-separerade origins, t.ex. "https://app.dindoman.com,http://localhost:3111"
+      # Tom = allow-all utan credentials (fungerar med Bearer-token auth)
+      - CORS_ORIGINS=${CORS_ORIGINS:-}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      # Bind enbart till localhost — CF Tunnel når 127.0.0.1:8007 på hosten.
+      # Direkt LAN-åtkomst till porten blockeras → CF Access-headers kan inte spoofas.
+      - "127.0.0.1:8007:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health').read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  web:
+    build: ./frontend
+    container_name: fridgely-web
+    restart: unless-stopped
+    ports:
+      - "3111:80"
+    depends_on:
+      - api
+    healthcheck:
+      # Hämta root-sidan. nginx:alpine har wget via busybox.
+      # Om html serveras = nginx lever. Om wget eller nginx kraschar = unhealthy.
+      test: ["CMD-SHELL", "wget -qO- --tries=1 --timeout=3 http://127.0.0.1/ >/dev/null"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

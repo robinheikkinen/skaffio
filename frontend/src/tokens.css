@@ -1,0 +1,81 @@
+/* ============================================
+   SKAFFIO — Design Tokens
+   Gemensam branding för hela appen
+   ============================================ */
+
+:root {
+  /* ── Brand Colors ── */
+  --color-orange:      #E07A4A;   /* Primär accent — knappar, aktiva states, CTA */
+  --color-orange-hover:#CB6535;   /* Hover-state för orange */
+  --color-orange-light:#FDE8D8;   /* Subtil orange bakgrund, chips, badges */
+
+  --color-green-dark:  #1E2A1A;   /* Sidebar bakgrund (mörkt tema) */
+  --color-green-deep:  #141E10;   /* Djupare mörkt — sidebar hover bg */
+  --color-green-mid:   #2E3E28;   /* Kort-bakgrund, secondary dark */
+  --color-mint:        #4ECDA0;   /* Sekundär accent — success, aktiv nav-item text */
+  --color-mint-light:  #E8F3EC;   /* Subtil mint bakgrund */
+
+  --color-amber:       #D4872A;   /* Tertiary accent — warnings, highlight */
+  --color-veg-green:   #7ACC5A;   /* Grönsak-grön (från ikon) */
+  --color-food-yellow: #E0C84A;   /* Mat-gul (från ikon) */
+
+  /* ── Neutrals ── */
+  --color-cream:       #FDF6ED;   /* Ljus bakgrund, kort på mörk */
+  --color-cream-dark:  #F4EDE0;   /* Sidebar ljust tema */
+  --color-bg-light:    #F2EDE6;   /* Sidans bakgrund (ljust tema) */
+  --color-text-dark:   #1E2A1A;   /* Primär text (ljust tema) */
+  --color-text-muted:  #7A6050;   /* Sekundär text, labels */
+  --color-border:      rgba(30,42,26,0.10); /* Subtil border */
+
+  /* ── Typography ── */
+  --font-display: 'Syne', 'Helvetica Neue', sans-serif;   /* Logotyp, rubriker */
+  --font-body:    'DM Sans', 'Helvetica Neue', sans-serif; /* Brödtext, UI */
+  --font-serif:   'Playfair Display', Georgia, serif;      /* Premium / Skafferiet */
+
+  /* ── Font Weights ── */
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-black:    800;
+
+  /* ── Border Radius ── */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
+  --radius-icon: 22px;  /* App-ikon border-radius */
+
+  /* ── Shadows ── */
+  --shadow-sm:   0 1px 4px rgba(0,0,0,0.06);
+  --shadow-md:   0 2px 12px rgba(0,0,0,0.08);
+  --shadow-lg:   0 8px 32px rgba(0,0,0,0.12);
+  --shadow-orange: 0 4px 16px rgba(224,122,74,0.30);
+}
+
+/* ── Dark theme (default) ── */
+[data-theme="dark"], .theme-dark {
+  --bg-primary:    #141E10;
+  --bg-secondary:  #1E2A1A;
+  --bg-card:       #2E3E28;
+  --bg-input:      rgba(253,246,237,0.06);
+  --text-primary:  #FDF6ED;
+  --text-secondary:rgba(253,246,237,0.55);
+  --text-muted:    rgba(253,246,237,0.30);
+  --border-color:  rgba(253,246,237,0.08);
+  --nav-active-bg: rgba(224,122,74,0.18);
+}
+
+/* ── Light theme ── */
+[data-theme="light"], .theme-light {
+  --bg-primary:    #F2EDE6;
+  --bg-secondary:  #F4EDE0;
+  --bg-card:       #FFFFFF;
+  --bg-input:      rgba(30,42,26,0.05);
+  --text-primary:  #1E2A1A;
+  --text-secondary:rgba(30,42,26,0.55);
+  --text-muted:    rgba(30,42,26,0.35);
+  --border-color:  rgba(30,42,26,0.10);
+  --nav-active-bg: rgba(224,122,74,0.10);
+}

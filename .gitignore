@@ -1,0 +1,27 @@
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+# Alla .env-varianter (även .env.save/.env.bak-olyckor) — utom exempelfilen
+.env*
+!.env.example
+dist/
+build/
+.next/
+out/
+coverage/
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+*.log
+logs/
+.cache/
+.eslintcache
+
+# Claude Code — lokala inställningar och worktrees (settings.json SKA committas)
+.claude/settings.local.json
+.claude/worktrees/
