@@ -21,6 +21,9 @@ Thumbs.db
 logs/
 .cache/
 .eslintcache
+__pycache__/
+*.pyc
+.pytest_cache/
 
 # Claude Code — lokala inställningar och worktrees (settings.json SKA committas)
 .claude/settings.local.json
